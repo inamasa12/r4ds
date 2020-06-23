@@ -17,7 +17,7 @@
 ### １章　ggplot2 によるデータ可視化  
 ggplot(data)で空グラフを作る  
 aesは変数とエステティック属性をマッピングする  
-エステティック属性には座標軸（x、y）、color、size、shape、stroke（マーカーの枠線）、fillがある  
+エステティック属性には座標軸（x、y）、color、size、shape、stroke（マーカーの枠線）、fill等がある  
 ~~~
 install.packages("tidyverse")
 library(tidyverse)
