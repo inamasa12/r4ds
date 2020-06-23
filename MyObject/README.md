@@ -1,7 +1,6 @@
 # R ではじめるデータサイエンス
 
 ## まえがき  
-
 データサイエンスのプロセスは、①データのインポート、②データの整理から始まる  
 その後、③変換、④可視化、⑤モデルの作業を繰り返す  
 ③～⑤の結果について、⑥コミュニケーションを行い、必要な場合は再度のデータサイエンスを行う  
@@ -16,3 +15,18 @@
 １章は可視化、３章は変換、５章は可視化と変換を用いた探索を学ぶ  
 
 ### １章　ggplot2 によるデータ可視化  
+ggplot(data)で空グラフを作る  
+aesは変数とエステティック属性をマッピングする  
+エステティック属性には座標軸（x、y）、color、size、shape、stroke（マーカーの枠線）、fillがある  
+~~~
+install.packages("tidyverse")
+library(tidyverse)
+
+ggplot(mpg) +
+  geom_point(aes(x=displ, y=hwy, color=class))
+~~~
+グラフ全体についてエステティック属性を指定したい場合は、aesの外側で指定する  
+~~~
+ggplot(mpg) +
+  geom_point(aes(x=displ, y=hwy), color="blue")
+~~~
