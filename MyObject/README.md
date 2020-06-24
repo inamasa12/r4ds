@@ -30,3 +30,21 @@ ggplot(mpg) +
 ggplot(mpg) +
   geom_point(aes(x=displ, y=hwy), color="blue")
 ~~~
+カテゴリ別にグラフ化  
+* 一変数  
+~~~
+ggplot(mpg) +
+  geom_point(aes(displ, hwy)) +
+  facet_wrap(~ class, 2)
+~~~
+* 二変数  
+~~~
+ggplot(mpg) +
+  geom_point(aes(displ, hwy)) +
+  facet_grid(drv ~ cyl)
+~~~
+
+
+
+
+
