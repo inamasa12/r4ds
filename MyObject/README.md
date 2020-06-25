@@ -43,7 +43,12 @@ ggplot(mpg) +
   geom_point(aes(displ, hwy)) +
   facet_grid(drv ~ cyl)
 ~~~
-
+複数のグラフを表示  
+~~~
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color=class)) +
+  geom_smooth()
+~~~
 
 
 
