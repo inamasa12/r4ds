@@ -49,7 +49,20 @@ ggplot(mpg, aes(displ, hwy)) +
   geom_point(aes(color=class)) +
   geom_smooth()
 ~~~
-
+データを要約した棒グラフ  
+~~~
+#総数
+ggplot(diamonds) +
+  geom_bar(aes(cut))
+#比率
+ggplot(diamonds) +
+  geom_bar(aes(x=cut, y=..prop.., group=1))
+~~~
+データをそのまま表示する棒グラフ  
+~~~
+ggplot(demo) +
+  geom_bar(aes(a, b), stat="identity")
+~~~
 
 
 
