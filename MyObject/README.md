@@ -63,6 +63,6 @@ ggplot(diamonds) +
 ggplot(demo) +
   geom_bar(aes(a, b), stat="identity")
 ~~~
-
+positionの内、stack（デフォルト）は積み上げ表示、identityは重ねて表示、fillは100%積み上げ表示、dodgeは並べて表示、jitterは乱数を加え重なりを無くす  
 
 
