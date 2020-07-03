@@ -64,5 +64,6 @@ ggplot(demo) +
   geom_bar(aes(a, b), stat="identity")
 ~~~
 positionの内、stack（デフォルト）は積み上げ表示、identityは重ねて表示、fillは100%積み上げ表示、dodgeは並べて表示、jitterは乱数を加え重なりを無くす  
+coord_flip(): 座標軸の入替、coord_quickmap(): 縦横比の調整、coord_polar(): 極座標の使用  
 
 
