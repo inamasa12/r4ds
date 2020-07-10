@@ -68,3 +68,35 @@ coord_flip(): 座標軸の入替、coord_quickmap(): 縦横比の調整、coord_
 どのようなグラフでもggplotの7つの引数（データ、geom関数、マッピング、stat、position、coord、facet）の組み合わせで表現できる  
 
 
+### ２章　ワークフロー  
+
+### ３章　dplyrによるデータ変換  
+1. filter
+行の選択、抽出  
+~~~
+filter(tibble, col %in% c(3, 6))
+filter(tibble, !(col1 == 3 | col2 == 6)
+filter(df, is.na(col))
+~~~
+
+1. arrange  
+行を整列  
+~~~
+arrange(df, col1, desc(col3))
+~~~
+
+1. select  
+列を選択、抽出  
+starts_with、 ends_with、condain、matches、everything 等の抽出を補助するヘルパー関数がある  
+~~~
+select(df, col1, col3, col7)
+select(df, -(col5:col8))
+~~~
+
+
+
+* Tips  
+View(tibble): ビューアーで表示  
+
+
+
