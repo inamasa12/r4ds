@@ -93,13 +93,21 @@ select(df, col1, col3, col7)
 select(df, -(col5:col8))
 ~~~
 
-1.rename  
+1. rename  
 列名の変更  
 ~~~
 rename(df, new_name1 = old_name1, new_name2 = old_name2)
 ~~~
 
 1. mutate  
+列同士の演算  
+lead、lag、min_rank、row_number、dense_rank、percent_rank、cume_dist、ntile等の列作成関数がある  
+~~~
+#列を追加
+mutate(flights_sml, gain = arr_delay - dep_delay, hours = air_time / 60, gain_per_hour = gain / hours)
+#新しい列を作成
+transmute(flights_sml, gain = arr_delay - dep_delay, hours = air_time / 60, gain_per_hour = gain / hours)
+~~~
 
 
 * Tips  
