@@ -93,6 +93,13 @@ select(df, col1, col3, col7)
 select(df, -(col5:col8))
 ~~~
 
+1.rename  
+列名の変更  
+~~~
+rename(df, new_name1 = old_name1, new_name2 = old_name2)
+~~~
+
+1. mutate  
 
 
 * Tips  
