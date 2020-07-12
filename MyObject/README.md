@@ -69,6 +69,13 @@ coord_flip(): 座標軸の入替、coord_quickmap(): 縦横比の調整、coord_
 
 
 ### ２章　ワークフロー  
+ショートカット  
+Alt + shift + k: ショートカットキーリスト  
+Ctrl + shift + .: タブ  
+Ctrl + Tab: 次のタブ  
+Ctrl + shift + Tab: 前のタブ  
+ctrl + 2: console  
+
 
 ### ３章　dplyrによるデータ変換  
 1. filter
