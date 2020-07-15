@@ -116,6 +116,17 @@ mutate(flights_sml, gain = arr_delay - dep_delay, hours = air_time / 60, gain_pe
 transmute(flights_sml, gain = arr_delay - dep_delay, hours = air_time / 60, gain_per_hour = gain / hours)
 ~~~
 
+1. group_by & summarize  
+グループ別に集計  
+各種ヘルパー関数が存在、min(x)、max(x)、quantile(x, 0.4)、first(x)、nth(x, 2)、last(x)  
+~~~
+group_by(tibble, col1, col3) %>%
+    summarize(n=n(),
+                cnt=sum(!is.na(col4), na.rm=T),
+                mean=mean(col6, na.rm=T),
+                med=median(col6, na.rm=T),
+                sd=sd(col6, na.rm=T),)
+~~~
 
 * Tips  
 View(tibble): ビューアーで表示  
