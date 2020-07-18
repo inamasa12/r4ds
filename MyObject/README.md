@@ -126,7 +126,20 @@ group_by(tibble, col1, col3) %>%
                 mean=mean(col6, na.rm=T),
                 med=median(col6, na.rm=T),
                 sd=sd(col6, na.rm=T),)
+
+group_by(tibble, col2, col4) %>%
+    mutate(rank=min_rank(col3))   #グループ別にランキング
+
+                sd=sd(col6, na.rm=T),)
+
+group_by(tibble, col2, col4) %>%
+    summarize(dist=n_distinct(col5))   #一意の個数をカウント
+
+tibble %>% count(col2, wt=col4)   #col2のグループ別にカウント（重みはcol4）
 ~~~
+
+
+
 
 * Tips  
 View(tibble): ビューアーで表示  
