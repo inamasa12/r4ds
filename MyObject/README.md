@@ -128,15 +128,18 @@ group_by(tibble, col1, col3) %>%
                 sd=sd(col6, na.rm=T),)
 
 group_by(tibble, col2, col4) %>%
-    mutate(rank=min_rank(col3))   #グループ別にランキング
-
-                sd=sd(col6, na.rm=T),)
+    summarize(dist=n_distinct(col5))   #一意の個数をカウント
 
 group_by(tibble, col2, col4) %>%
-    summarize(dist=n_distinct(col5))   #一意の個数をカウント
+    mutate(rank=min_rank(col3))   #グループ別にランキング
+
+group_by(tibble, col2, col4) %>%
+    mutate(ratio=col3/sum(col3)) %>%
+    filter(ratio > 0.5) #グループ別に演算、抽出
 
 tibble %>% count(col2, wt=col4)   #col2のグループ別にカウント（重みはcol4）
 ~~~
+
 
 
 
