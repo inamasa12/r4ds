@@ -135,7 +135,7 @@ group_by(tibble, col2, col4) %>%
 
 group_by(tibble, col2, col4) %>%
     mutate(ratio=col3/sum(col3)) %>%
-    filter(ratio > 0.5) #グループ別に演算、抽出
+    filter(ratio > 0.5) #グループ別に演算、対象のグループに属するデータ抽出
 
 tibble %>% count(col2, wt=col4)   #col2のグループ別にカウント（重みはcol4）
 ~~~
