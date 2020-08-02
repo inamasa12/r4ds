@@ -68,7 +68,7 @@ coord_flip(): 座標軸の入替、coord_quickmap(): 縦横比の調整、coord_
 どのようなグラフでもggplotの7つの引数（データ、geom関数、マッピング、stat、position、coord、facet）の組み合わせで表現できる  
 
 
-### ２章　ワークフロー  
+### ２章　ワークフロー： 基本  
 ショートカット  
 Alt + shift + k: ショートカットキーリスト  
 Ctrl + shift + .: タブ  
@@ -140,12 +140,15 @@ group_by(tibble, col2, col4) %>%
 tibble %>% count(col2, wt=col4)   #col2のグループ別にカウント（重みはcol4）
 ~~~
 
-
-
-
-
 * Tips  
 View(tibble): ビューアーで表示  
+
+
+### ４章　ワークフロー： スクリプト  
+
+コード作成にスクリプト、ショートカットキーを使用しましょう  
+
+### ５章　探索的データ分析（Exploratory Data Analysis）  
 
 
 
