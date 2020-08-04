@@ -148,6 +148,7 @@ View(tibble): ビューアーで表示
 
 コード作成にスクリプト、ショートカットキーを使用しましょう  
 
+
 ### ５章　探索的データ分析（Exploratory Data Analysis）  
 
 
