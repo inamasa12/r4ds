@@ -84,6 +84,7 @@ ctrl + 2: console
 filter(tibble, col %in% c(3, 6))
 filter(tibble, !(col1 == 3 | col2 == 6)
 filter(df, is.na(col))
+filter(df, between(col1, 3, 5))
 ~~~
 
 1. arrange  
@@ -94,7 +95,7 @@ arrange(df, col1, desc(col3))
 
 1. select  
 列を選択、抽出  
-starts_with、 ends_with、condain、matches、everything 等の抽出を補助するヘルパー関数がある  
+starts_with、 ends_with、condain、matches、everything、等の抽出を補助するヘルパー関数がある  
 ~~~
 select(df, col1, col3, col7)
 select(df, -(col5:col8))
@@ -108,7 +109,7 @@ rename(df, new_name1 = old_name1, new_name2 = old_name2)
 
 1. mutate  
 列同士の演算  
-lead、lag、min_rank、row_number、dense_rank、percent_rank、cume_dist、ntile等の列作成関数がある  
+lead、lag、min_rank、row_number、dense_rank、percent_rank、cume_dist、ntile、ifelse等の列作成関数がある  
 ~~~
 #列を追加
 mutate(flights_sml, gain = arr_delay - dep_delay, hours = air_time / 60, gain_per_hour = gain / hours)
@@ -151,5 +152,20 @@ View(tibble): ビューアーで表示
 
 ### ５章　探索的データ分析（Exploratory Data Analysis）  
 
+変数の変動、共変動を把握する（分布の可視化）  
 
+~~~
+# カテゴリカル変数
+ggplot(tibble) 
+    + geom_bar(aes(x=val))
+
+# 連続変数
+ggplot(tibble, aes(x=val)) 
+    + geom_histogram(binwidth=0.1)
+    + coord_cartesian(ylim=c(0, 50)) # 範囲のフォーカス
+
+# 複数（分布を折れ線表示）
+ggplot(tibble, aes(x=val, color=cat)) 
+    + geom_freqpoly(binwidth=0.1)
+~~~
 
