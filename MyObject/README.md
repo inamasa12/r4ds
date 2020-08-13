@@ -153,11 +153,13 @@ View(tibble): ビューアーで表示
 ### ５章　探索的データ分析（Exploratory Data Analysis）  
 
 変数の変動、共変動を把握する（分布の可視化）  
+基本はヒストグラム  
+複数変数の比較には箱ひげ図が便利  
 
 ~~~
 # カテゴリカル変数
 ggplot(tibble) 
-    + geom_bar(aes(x=val))
+    + geom_bar(aes(x=cat))
 
 # 連続変数
 ggplot(tibble, aes(x=val)) 
@@ -167,5 +169,16 @@ ggplot(tibble, aes(x=val))
 # 複数（分布を折れ線表示）
 ggplot(tibble, aes(x=val, color=cat)) 
     + geom_freqpoly(binwidth=0.1)
+
+# 密度
+ggplot(tibble, aes(x=val, y=..density..)) 
+    + geom_freqpoly(aes(color=cat), binwidth=0.1)
+
+# 箱ひげ図
+ggplot(tibble) +
+  geom_boxplot(
+    aes(x=reorder(cat, val, FUN=median), # reorderで変数の表示順序を指定（この場合はvalの中央値で昇順）
+        y=val)) +
+  coord_flip() # 軸の入替
 ~~~
 
