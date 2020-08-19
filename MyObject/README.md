@@ -182,3 +182,6 @@ ggplot(tibble) +
   coord_flip() # 軸の入替
 ~~~
 
+
+* Tips  
+cutwidth(col, 0.5): 区分毎にカウント  
