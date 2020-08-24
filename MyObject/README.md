@@ -157,29 +157,53 @@ View(tibble): ビューアーで表示
 複数変数の比較には箱ひげ図が便利  
 
 ~~~
-# カテゴリカル変数
+# カテゴリカル変数の分布
 ggplot(tibble) 
     + geom_bar(aes(x=cat))
 
-# 連続変数
+# 連続変数の分布
 ggplot(tibble, aes(x=val)) 
     + geom_histogram(binwidth=0.1)
     + coord_cartesian(ylim=c(0, 50)) # 範囲のフォーカス
 
-# 複数（分布を折れ線表示）
+# 複数グループの度数分布（連続変数&カテゴリカル変数）
 ggplot(tibble, aes(x=val, color=cat)) 
     + geom_freqpoly(binwidth=0.1)
 
-# 密度
+# 複数グループの密度分布（連続変数&カテゴリカル変数）
 ggplot(tibble, aes(x=val, y=..density..)) 
     + geom_freqpoly(aes(color=cat), binwidth=0.1)
 
-# 箱ひげ図
+# 複数グループの箱ひげ図（連続変数&カテゴリカル変数）
 ggplot(tibble) +
   geom_boxplot(
     aes(x=reorder(cat, val, FUN=median), # reorderで変数の表示順序を指定（この場合はvalの中央値で昇順）
         y=val)) +
   coord_flip() # 軸の入替
+ 
+ # ヒートマップ（2つのカテゴリカル変数）
+ diamonds %>%
+  count(color, cut) %>%
+  ggplot(aes(color, cut)) +
+    geom_tile(aes(fill=n))
+
+
+# 連続変数同士の分布
+1. 透明度で濃淡をつける
+ggplot(diamonds) +
+  geom_point(aes(x=carat, y=price), alpha=0.1)
+
+2. 区間度数
+* 長方形
+ggplot(diamond) +
+  geom_bin2d(aes(x=carat, y=price))
+* 六角形
+ggplot(smaller) +
+  geom_hex(aes(x=carat, y=price))
+
+3. 連続変数を区分
+ggplot(diamonds, aes(x=price)) +
+  geom_freqpoly(aes(color=cut_width(carat, 1)))
 ~~~
 
 
