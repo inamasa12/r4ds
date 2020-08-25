@@ -206,6 +206,14 @@ ggplot(diamonds, aes(x=price)) +
   geom_freqpoly(aes(color=cut_width(carat, 1)))
 ~~~
 
-
 * Tips  
 cutwidth(col, 0.5): 区分毎にカウント  
+
+
+### ６章　ワークフロー  
+
+スクリプトを残すこと  
+相対パスを使用すること  
+プロジェクトを利用すること  
+
+
