@@ -241,7 +241,14 @@ df[[1]]
 ~~~
 
 ### ８章　readrによるデータインポート  
-
+* ファイルのロード  
+~~~
+read_csv("file.csv", skip=2
+                    , comment="#"
+                    , col_names=FALSE # 列名を入れない場合
+                    , col_names=c("x", "y", "z") # 列名を指定する場合
+                    , na=".")
+~~~
 
 
 
