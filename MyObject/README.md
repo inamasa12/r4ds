@@ -250,6 +250,9 @@ read_csv("file.csv", skip=2
                     , na=".")
 ~~~
 
+* ベクトルのパース  
+型別に読み込みの関数がある  
+parse_logical、parse_integer、parse_double、parse_number、parse_character、parse_factor、parse_datetime、parse_date、parse_time
 
 
 
