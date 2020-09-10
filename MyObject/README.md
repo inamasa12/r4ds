@@ -253,6 +253,35 @@ read_csv("file.csv", skip=2
 * ベクトルのパース  
 型別に読み込みの関数がある  
 parse_logical、parse_integer、parse_double、parse_number、parse_character、parse_factor、parse_datetime、parse_date、parse_time
+~~~
+# 数値のパース
+parse_double("1,23", locale=locale(decimal_mark=",")
+# parse_number
+parse_number("20%") # 20だけを取り出す
+parse_number("123.456", locale=locale(grouping_mark=".")
+
+# 文字のパース
+デフォルトはUTF-8
+parse_character(x, locale=locale(encoding="Shift-JIS") 
+
+# ファクターのパース  
+parse_factor(x, levels=c("a", "b"))
+
+#タイムシリーズのパース
+デフォルトはISO8601（年、月、日、時、分、秒の順）
+parse_datetime("2010-10-01T2010")
+parse_date("2010-10-01")
+parse_time("20:10:01")
+parse_date(x, "特定のフォーマット")
+~~~
+
+* ファイルのパース
+
+
+
+* Tips  
+guess_encoding(charToRaw(x)): バイト列から符号化方式を推定  
+guess_parser(x): 型を推定  
 
 
 
