@@ -276,13 +276,26 @@ parse_date(x, "特定のフォーマット")
 ~~~
 
 * ファイルのパース
+~~~
+# 型を指定して読み込み
+read_csv("challenge.csv",
+  col_types = cols(
+    x = col_double(),
+    y = col_date()
+  ))
+~~~
 
+* ファイルへの書き出し  
+~~~
+write_csv(x, "x.csv") # csvの場合、型情報は失われる
+write_rds(x, "x.rds") # RDS形式は型を維持する
+~~~
 
 
 * Tips  
 guess_encoding(charToRaw(x)): バイト列から符号化方式を推定  
 guess_parser(x): 型を推定  
-
+type_convert(df): 文字列型のdfから、型推定を行いtibbleに変換  
 
 
 
