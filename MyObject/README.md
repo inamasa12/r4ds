@@ -302,3 +302,34 @@ type_convert(df): 文字列型のdfから、型推定を行いtibbleに変換
 
 各変数（カテゴリカル変数を含む）が列に、各データが行に並んだデータを基本データ表現とする  
 
+* データの展開（spread）と集約（gather）  
+~~~
+stocks %>%
+  spread(key=year, value=return) %>% 　　　# year列の値を列名として、return列を展開
+  gather("year", "return", `2015`:`2016`)　# 2015から2016までの列名をyear列、値をreturn列として集約
+~~~
+
+* データの分割（separate）と接合（unite）  
+~~~
+# rate列をcases列とpopulation列に分割する
+table %>%
+  separate(rate, into=c("cases", "population"), remove=T)
+
+# cases列とpopulation列をrate列にまとめる
+table %>%
+  unite(rate, cases, population, sep="/", remove=F)
+~~~
+
+* 例  
+~~~
+who %>%
+  gather(new_sp_m014:newrel_f65, key="key", value="cases", na.rm=T) %>%
+  mutate(key=stringr::str_replace(key, "newrel", "new_rel")) %>%
+  separate(key, c("new", "type", "sexage"), sep="_") %>%
+  select(-new, -iso2, -iso3) %>%
+  separate(sexage, c("sex", "age"), sep=1)
+~~~
+
+* Tips  
+complete(tbl, a, b): a列とb列の値の全ての組み合わせの行を作る  
+fill(a): NAを直前の値で補完  
