@@ -373,3 +373,26 @@ setdiff(df1, df2)   # df1にあるがdf2にない行を返す
 
 ### １１章　stringrによる文字列  
 
+stringrパッケージ: 42関数、stringiパッケージ: 234関数  
+stringrで無いものは、stringiで探す  
+
+* 文字列操作  
+~~~
+str_length(c('abc', 'def'))             # 各文字列の長さ
+str_c('x', 'y', sep=', ')               # 文字列を連結
+str_c(c('x', 'y', 'z'), collapse=', ')  # 各文字列を連結
+str_sub('Apple', 1, 3)                  # 文字列の指定の範囲を抽出
+str_to_lower("ABC")                     # 小文字に変換
+
+
+
+
+
+
+
+~~~
+
+
+
+
+
