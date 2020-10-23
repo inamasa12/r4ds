@@ -382,9 +382,15 @@ str_length(c('abc', 'def'))             # 各文字列の長さ
 str_c('x', 'y', sep=', ')               # 文字列を連結
 str_c(c('x', 'y', 'z'), collapse=', ')  # 各文字列を連結
 str_sub('Apple', 1, 3)                  # 文字列の指定の範囲を抽出
-str_to_lower("ABC")                     # 小文字に変換
-
-
+str_to_lower(upper, title)("ABC")       # 小文字（大文字、先頭の文字だけ大文字）に変換
+str_sort(x, locale='en')                # ロケールを設定して文字列をソート
+str_trim(' abc ')                       # 両端の空白を取り除く
+str_pad('abc', 5, pad='$')              # 端に特定の文字を加える
+~~~
+* 文字列マッチ
+~~~
+str_view(_all)(c("abc","a.c", "bef"), "a\\.c") # 正規表現とのマッチをビューで確認
+str_detect(x, "e")                             # マッチがある場合はTRUE、ない場合はFALSEを返す
 
 
 
@@ -392,6 +398,10 @@ str_to_lower("ABC")                     # 小文字に変換
 
 ~~~
 
+
+* Tips  
+identical(a, b): オブジェクトが同じかどうかを判定する  
+seq_along(a): 同じ長さのシーケンスを生成  
 
 
 
