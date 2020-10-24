@@ -377,7 +377,8 @@ stringrパッケージ: 42関数、stringiパッケージ: 234関数
 stringrで無いものは、stringiで探す  
 
 * 文字列操作  
-~~~
+~~~                   str_count(words, "[aeiou]")                    # マッチの数を数える
+
 str_length(c('abc', 'def'))             # 各文字列の長さ
 str_c('x', 'y', sep=', ')               # 文字列を連結
 str_c(c('x', 'y', 'z'), collapse=', ')  # 各文字列を連結
@@ -386,23 +387,35 @@ str_to_lower(upper, title)("ABC")       # 小文字（大文字、先頭の文�
 str_sort(x, locale='en')                # ロケールを設定して文字列をソート
 str_trim(' abc ')                       # 両端の空白を取り除く
 str_pad('abc', 5, pad='$')              # 端に特定の文字を加える
+str_split(boundary("word"), n=20, simplify=T)  # 文字列を分割する
 ~~~
+
 * 文字列マッチ
+マッチは必ず重ならない
+特定の文字列を抽出するならextractかmatchだが、matchが柔軟  
 ~~~
 str_view(_all)(c("abc","a.c", "bef"), "a\\.c") # 正規表現とのマッチをビューで確認
+str_count(words, "[aeiou]")                    # マッチの数を数える
 str_detect(x, "e")                             # マッチがある場合はTRUE、ない場合はFALSEを返す
-
-
-
-
-
+str_extract(_all)(sentences, "^.+?\\b")        # マッチした部分を抽出する
+str_match(_all)(noun, "(a|the) ([^ ]+)")       # マッチした部分とその要素を抽出する
+str_replace(_all)(x, "[aeiou]", "-")           # マッチした部分を置き換える
+str_replace(_all)(x, c("1"="a", "2"="b", "3"="c"))
 ~~~
 
+* 正規表現  
+regex("正規表現", ignore_case=T)で細かい指定ができる
+fixed()はバイト列で比較するため速い  
+coll()はロケールの標準照合規則を用いてマッチする  
 
 * Tips  
 identical(a, b): オブジェクトが同じかどうかを判定する  
 seq_along(a): 同じ長さのシーケンスを生成  
+apropos("単語"): 関数等のオブジェクトを探す
+dir(pattern="\\.R"): カレントディレクトリのファイルを探す  
 
+
+### １２章　forcatsでファクタ  
 
 
 
