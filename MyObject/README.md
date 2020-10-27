@@ -417,5 +417,73 @@ dir(pattern="\\.R"): カレントディレクトリのファイルを探す
 
 ### １２章　forcatsでファクタ  
 
+forcatsパッケージを使用  
+
+* ファクタの作成  
+~~~
+#水準集合、希望の順に並べて作成
+month_levels <- c(
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+#factorの作成
+y1 <- factor(x1, levels=month_levels)
+
+#出現順にレベルを設定
+fct_inorder(z1)
+
+#レベルを表示
+levels(a1)
+~~~
+
+* ファクタの操作
+~~~
+#ファクタの順序を他の変数の要約値（この場合は中央値）で並び替え
+relig %>%
+  mutate(relig=fct_reorder(relig, tvhours)) %>%
+  ggplot(aes(tvhours, relig)) + 
+  geom_point()
+
+#特定の値を先頭に置く 
+ggplot(rincome, aes(age, fct_relevel(rincome, "Not applicable"))) + 
+  geom_point()
+
+#ageの最大値（右端）のpropの値で並び変える
+ggplot(by_age,
+       aes(age, prop, color=fct_reorder2(marital, age, prop))
+       ) +
+  geom_line() +
+  labs(color="maital")
+  
+#度数で並び変えて、逆順にする
+gss_cat %>%
+  mutate(marital = marital %>% fct_infreq() %>% fct_rev()) %>%
+  ggplot(aes(marital)) +
+  geom_bar()
+
+#ファクタ名を変える
+gss_cat %>%
+  mutate(partyid=fct_recode(partyid,
+                            "Republican, strong"   ="Strong republican",
+                            "Republican, weak"     ="Not str republican",
+                            "Independent, near rep"="Ind,near rep",
+                            "Independent, near dem"="Ind,near dem",
+                            "Democrat, weak"       ="Not str democrat",
+                            "Democrat, strong"     ="Strong democrat")) %>%
+  count(partyid)
+
+
+#ファクタをまとめる
+gss_cat %>%
+  mutate(partyid = fct_collapse(partyid,
+                                other = c("No answer", "Don't know", "Other party"),
+                                rep = c("Strong republican", "Not str republican"),
+                                ind = c("Ind,near rep", "Independent", "Ind,near dem"),
+                                dem = c("Not str democrat", "Strong democrat"))) %>%
+  count(year, partyid)
+
+~~~
+* Tips  
+unique(x): 出現順に一意の集合を作成  
 
 
