@@ -473,7 +473,7 @@ gss_cat %>%
   count(partyid)
 
 
-#ファクタをまとめる
+#ファクタをまとめる①
 gss_cat %>%
   mutate(partyid = fct_collapse(partyid,
                                 other = c("No answer", "Don't know", "Other party"),
@@ -482,8 +482,16 @@ gss_cat %>%
                                 dem = c("Not str democrat", "Strong democrat"))) %>%
   count(year, partyid)
 
+#ファクタをまとめる②、最小グループを順にOtherにまとめてn個にする
+gss_cat %>%
+  mutate(relig=fct_lump(relig, n=10)) %>%
+  count(relig, sort=T)
 ~~~
+
 * Tips  
 unique(x): 出現順に一意の集合を作成  
+
+
+### １３章　lubridateによる日付と時刻
 
 
