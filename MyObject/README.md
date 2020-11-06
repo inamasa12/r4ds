@@ -494,4 +494,71 @@ unique(x): 出現順に一意の集合を作成
 
 ### １３章　lubridateによる日付と時刻
 
+* 日付時刻オブジェクトの作成  
+~~~
+today() # 日付
+now() # 日付時刻
+
+# 数字や文字列から変換
+ymd(20170131)
+mdy("January 31st, 2017")
+dmy("31-Jan-2017")
+ymd_hms("2017-01-31 20:11:59")
+mdy_hm("01/31/2017 08:01")
+
+# 日付要素から作成
+make_datetime(year, month, day, hour, minute)
+
+# 日付オブジェクトの変更
+as_datetime(today())
+as_date(now())
+~~~
+
+* 日付要素の取得  
+~~~
+year(datetime)
+month(datetime)
+mday(datetime)
+yday(datetime)
+wday(datetime)
+~~~
+
+* 日付の操作  
+~~~
+floor_date(dep_time, "week") # 切り捨て
+round_date(dep_time, "week") # 四捨五入
+ceiling_date(dep_time, "week") # 切り上げ
+
+# 日付要素の変更
+month(datetime) <- 1
+hour(datetime) <- hour(datetime) + 1
+update(datetime, year=2020, month=2, mday=2, hour=2)
+~~~
+
+* タイムスパン  
+~~~
+#デュレーション ⇒ 秒単位の時間区間
+dyears(1)
+ddays(1)
+
+#ピリオド ⇒ 一単位の時間区間
+days(1)
+years(4)
+
+# インターバル ⇒ 特定の時間区間
+today() %--% year_after
+~~~
+
+* タイムゾーン  
+タイムゾーンは属性の一つで表示をコントロールする  
+~~~
+with_tz(x4, tzone="Australia/Lord_Howe") # タイムゾーンの変更 ⇒ 時刻は変わらない
+force_tz(x4, tzone="Australia/Lord_Howe") # 時刻をそのままにタイムゾーンを変更 ⇒ 時刻は変わる
+~~~
+
+## 第Ⅲ部　プログラム  
+
+パイプ、関数、データ構造、イテレーション  
+
+### １３章　lubridateによる日付と時刻
 
