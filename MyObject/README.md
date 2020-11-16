@@ -604,7 +604,26 @@ rescale01 <- function(x) {
 条件文において、||と&&は横着評価で、||は最初のTRUEでTRUEを返し、&&は最初のFALSEでFALSEを返す  
 |と&はベクトルの論理演算子であり、条件には使用しない  
 any()、all()、identical()は、単一のTRUEもしくはFALSEを返すため条件には便利  
+else ifやswitchで複合条件を扱える  
 
+制約条件は関数のトップに置く  
+~~~
+if(!is.na(logical(na.rm))){
+  stop("`na.rm` must be logical")
+}
+stopifnot(is.logical(na.rm))
+~~~
 
+その他  
+~~~
+# 複数の引数　　
+function(...){}
+# 戻り値（単純な解を早めに返す場合に用いる）
+return(0)
+# 表示しない戻り値（パイプ可能な関数とするにはオブジェクトを必ず返す必要がある
+invisible(df)
+~~~
+
+### １６章　ベクトル  
 
 
