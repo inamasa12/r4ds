@@ -413,7 +413,7 @@ identical(a, b): オブジェクトが同じかどうかを判定する
 seq_along(a): 同じ長さのシーケンスを生成  
 apropos("単語"): 関数等のオブジェクトを探す
 dir(pattern="\\.R"): カレントディレクトリのファイルを探す  
-
+dir("../data", pattern="\\.csv"): カレントディレクトリ下のcsvファイルを探す 
 
 ### １２章　forcatsでファクタ  
 
