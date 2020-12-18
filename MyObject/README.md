@@ -670,6 +670,46 @@ tibbleやデータフレームは、列名や行名を属性に持った同じ�
 
 ### １７章　purrrでイテレーション  
 
+1. 命令型プログラミング  
+命令文による繰り返し処理  
+ループ処理を高速に行うためには、各処理の都度データを整形するのではなく、出力をリストにまとめておき、最後にまとめて整形すると良い  
+~~~
+# 先に出力スペースを確保すると速い
+output <- vector("double", length(df))
+for (i in seq_along(df)) {
+  output[[i]] <- mean(df[[i]])
+  }
+
+# 名前でもループできる  
+for (nm in names(df)) {
+  output[[i]] <- mean(df[[nm]])
+}
+
+# シーケンス長が不明な場合
+while (i <= length(df)) {
+  i <- i + 1
+}
+~~~
+
+1. 関数型プログラミング  
+関数による繰り返し処理  
+map関数はapply関数に比べて使いやすい一方で、出力はベクトルに限られる（apply関数はマトリックスも出力する）  
+~~~
+map(df, mean, 関数への引数) # 各要素（dfの場合は列）に関数を適用した出力をリストで返す  
+map_dbl(df, mean, 関数への引数) # double型のベクトルで返す
+
+# 匿名関数の利用
+mtcars %>%
+  split(.$cyl) %>%
+  map(function(df) lm(mpg ~ wt, data=df))
+  map(~lm(mpg~wt, data=.))　# ショートカット、.はリスト要素を表す
+
+# エラー処理
+# safely関数で修正された関数は、正常出力とエラー出力のリストを返す
+# possiblyやquetlyも、エラー出力をカスタマイズした修正関数を作る  
+safe_log <- safely(log)
+~~~
+
 
 
 
