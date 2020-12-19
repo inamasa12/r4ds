@@ -695,7 +695,7 @@ while (i <= length(df)) {
 関数による繰り返し処理  
 map関数はapply関数に比べて使いやすい一方で、出力はベクトルに限られる（apply関数はマトリックスも出力する）  
 ~~~
-map(df, mean, 関数への引数) # 各要素（dfの場合は列）に関数を適用した出力をリストで返す  
+map(df, mean, 関数への引数) # 各要素（dfの場合は列、ベクトルの場合は要素）に関数を適用した出力をリストで返す  
 map_dbl(df, mean, 関数への引数) # double型のベクトルで返す
 
 # 匿名関数の利用
@@ -706,11 +706,64 @@ mtcars %>%
 
 # エラー処理
 # safely関数で修正された関数は、正常出力とエラー出力のリストを返す
-# possiblyやquetlyも、エラー出力をカスタマイズした修正関数を作る  
+# possibly（エラー時の出力をコントロール）やquetly（メッセージや警告をリスト化して出力）も、エラー出力をカスタマイズした修正関数を作る  
 safe_log <- safely(log)
+
+# 複数のパラメータをイテレーション
+mu <- list(5, 10, -3)
+sigma <- list(1, 5, 10)
+n <- list(1, 3, 5)
+map2(mu, sigma, rnorm, n=5) # ２変数
+args1 <- list(n, mu, sigma)
+args1 %>% pmap(rnorm) # ３変数
+
+# 関数のイテレーション
+# 関数とパラメータを別に指定
+f <- c("runif", "rnorm", "rpois")
+param <- list(
+  list(min=-1, max=1),
+  list(sd=5),
+  list(lambda=10)
+)
+invoke_map(f, param, n=5)
+
+# 関数とパラメータをtibbleにまとめて指定
+sim <- tribble(
+  ~f, ~params,
+  "runif", list(min=-1, max=1),
+  "rnorm", list(sd=5),
+  "rpois", list(lambda=10)
+)
+sim %>%
+  mutate(sim=invoke_map(f, params, n=10))
+
+#その他
+
+iris %>% keep(is.factor) # Trueの要素だけを残す
+iris %>% discard(is.factor) # Falseの要素だけを残す
+x <- list(1:5, letters, list(10))
+x %>% some(is_character) # いずれかの要素がTrueならTrueを返す
+x %>% every(is_character) # 全ての要素がTrueならTrueを返す
+x %>% detect(~. >5) #真となる最初の要素を返す
+x %>% detect_index(~. >5) #真となる最初の要素番号を返す
+x %>% head_while(~. >5) #真となる先頭からの要素列を返す
+x %>% tail_while(~. >5) #真となる末尾からの要素列を返す
+
+# reduceは先頭の要素から順次ペアを作成し、関数を適用していく
+dfs <- list(
+  age=tibble(name="John", age=30),
+  sex=tibble(name=c("John", "Mary"), sex=c("M", "F")),
+  trt=tibble(name="Mary", treatment="A")
+)
+dfs %>% reduce(full_join)
+
+# accumulateはreduce同様の処理を行うが、関数の適用結果を全て保持する
+x <- sample(10)
+x %>% accumulate(`+`)
 ~~~
 
-
+* Tips  
+walk(func): mapと異なり、戻り値ではなく、処理自体を目的に関数を要素に適用する  
 
 
 
