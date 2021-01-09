@@ -774,5 +774,44 @@ walk(func): mapと異なり、戻り値ではなく、処理自体を目的に�
 
 ### １８章　modelrを使ったモデルの基本  
 
+モデルのファミリー（ファミリー）を定義  
+パラメータの推定 ⇒ モデルの評価尺度（最小二乗法等）  
+モデルの目的は有用で単純な近似を発見すること（真の理論を導くことが目的ではない）  
 
 
+
+~~~
+# 線形モデルの推定
+sim_mod <- lm(y~x, data=sim)
+
+# 一意の説明変数データグリッドを作成
+grid <- sim %>%
+  data_grid(x)
+
+# データグリッドに対して予測を算出
+grid <- grid %>%
+  add_predictions(sim_mod)
+
+# 元データに対して残差を算出
+sim <- sim %>%
+  add_residuals(sim_mod)
+~~~
+
+~~~
+# モデルの可視化
+
+#残差の分布
+ggplot(sim, aes(resid)) +
+  geom_freqpoly(binwidth=0.5)
+
+#残差のプロット
+g1 <- ggplot(sim, aes(x, resid)) +
+  geom_ref_line(h=0) +
+  geom_point() +
+  ylim(-5, 5)
+~~~
+
+
+
+* Tips  
+model_matrix(df, y ~ x1 + x2): フォーミュラで指定したモデルに沿って、説明変数を変換する    
