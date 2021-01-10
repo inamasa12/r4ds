@@ -795,10 +795,6 @@ grid <- grid %>%
 # 元データに対して残差を算出
 sim <- sim %>%
   add_residuals(sim_mod)
-~~~
-
-~~~
-# モデルの可視化
 
 #残差の分布
 ggplot(sim, aes(resid)) +
@@ -811,7 +807,34 @@ g1 <- ggplot(sim, aes(x, resid)) +
   ylim(-5, 5)
 ~~~
 
+~~~
+# 複数変数のモデル（x1が連続変数、x2がカテゴリカル変数の前提）  
+sim_mod_c1 <- lm(y~x1+x2, sim) # 交互作用効果なし
+sim_mod_c2 <- lm(y~x1*x2, sim) # 交互作用効果あり
+ 
+# データグリッドに対して予測を算出
+grid <- sim %>%
+  data_grid(x1, x2) %>%
+  gather_predictions(sim_mod_c1, sim_mod_c2)
+
+# 元データに対して残差を算出
+sim <- sim %>%
+  gather_residuals(sim_mod_c1, sim_mod_c2)
+
+# モデル毎にx2のレベル別の予測値（直線）を出力
+ggplot(sim, aes(x1, y, color=x2)) +
+  geom_point() +
+  geom_line(data=grid, aes(y=pred)) +
+  facet_wrap(~model)
+
+# モデル別にx2のレベル別の残差を出力
+ggplot(sim, aes(x1, resid, color=x2)) +
+  geom_point() +
+  facet_grid(model~x2)
+ ~~~
+
 
 
 * Tips  
 model_matrix(df, y ~ x1 + x2): フォーミュラで指定したモデルに沿って、説明変数を変換する    
+seq_range(x, n, trim=0.1, expand=0.1): ベクトルxの要素の範囲をn等分するグリッドを作成、trim、expandはそれぞれ、範囲をトリムもしくは拡張する  
