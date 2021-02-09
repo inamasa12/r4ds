@@ -864,7 +864,40 @@ seq_range(x, n, trim=0.1, expand=0.1): ベクトルxの要素の範囲をn等分
 ggplot(diamonds, aes(carat, price)) +
   geom_hex(bins=50)
 
+* 線形モデルを推定
+model_diamond <- lm(lprice~lcarat, data=diamonds_mod)
+
+* 予測値（新しいデータに対して）
+grid <- diamonds_mod %>%
+  data_grid(carat=seq_range(carat, 20)) %>%
+  mutate(lcarat=log2(carat)) %>%
+  add_predictions(model_diamond, "lprice") %>%
+  mutate(price=2^lprice)
+
+* 残差（モデル推定に使用したデータに対して）
+diamonds_mod <- diamonds_mod %>%
+  add_residuals(model_diamond, "lresid")
+~~~
+
 
 
 ~~~
+* 可視化（曜日別のフライト数）
+ggplot(daily, aes(wday, n)) +
+  geom_boxplot()
 
+* モデリング
+mod <- lm(n~wday, data=daily)
+
+* 残差の算出
+daily <- daily %>%
+  add_residuals(mod)
+
+* 残差の表示
+daily %>% ggplot(aes(date, resid)) +
+  geom_ref_line(h=0) +
+  geom_line() +
+  geom_smooth(se=F, span=0.2) # 傾向線
+  
+
+~~~
