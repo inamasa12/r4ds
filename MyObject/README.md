@@ -830,7 +830,7 @@ ggplot(sim, aes(x1, y, color=x2)) +
 ggplot(sim, aes(x1, resid, color=x2)) +
   geom_point() +
   facet_grid(model~x2)
- ~~~
+~~~
 
 * フォーミュラによる変換  
 ~~~
@@ -859,45 +859,56 @@ seq_range(x, n, trim=0.1, expand=0.1): ベクトルxの要素の範囲をn等分
 モデルの予測力に焦点を絞るのが機械学習だが、モデル自体はブラックボックス化する  
 ほとんどのモデルは前者と後者の組み合わせである  
 
+* モデルの作成と予測、残差の算出  
 ~~~
-* 二次元分布
+# 二次元分布
 ggplot(diamonds, aes(carat, price)) +
   geom_hex(bins=50)
 
-* 線形モデルを推定
+# 線形モデルを推定
 model_diamond <- lm(lprice~lcarat, data=diamonds_mod)
 
-* 予測値（新しいデータに対して）
+# 予測値（新しいデータに対して）
 grid <- diamonds_mod %>%
   data_grid(carat=seq_range(carat, 20)) %>%
   mutate(lcarat=log2(carat)) %>%
   add_predictions(model_diamond, "lprice") %>%
   mutate(price=2^lprice)
 
-* 残差（モデル推定に使用したデータに対して）
+# 残差（モデル推定に使用したデータに対して）
 diamonds_mod <- diamonds_mod %>%
   add_residuals(model_diamond, "lresid")
 ~~~
 
-
-
+* モデリングと残差の可視化  
 ~~~
-* 可視化（曜日別のフライト数）
+# 可視化（曜日別のフライト数）
 ggplot(daily, aes(wday, n)) +
   geom_boxplot()
 
-* モデリング
+# モデリング
 mod <- lm(n~wday, data=daily)
 
-* 残差の算出
+# 残差の算出
 daily <- daily %>%
   add_residuals(mod)
 
-* 残差の表示
+# 残差の表示
 daily %>% ggplot(aes(date, resid)) +
   geom_ref_line(h=0) +
   geom_line() +
   geom_smooth(se=F, span=0.2) # 傾向線
-  
+~~~
 
+* 複数のモデルの比較
+~~~
+# 新しい変数を交差項として考慮
+mod1 <- lm(n~wday, data=daily)
+mod2 <- lm(n~wday*term, data=daily)
+
+# 複数のモデルの残差を可視化
+daily %>%
+  gather_residuals(without_term=mod1, with_term=mod2) %>%
+  ggplot(aes(date, resid, color=model)) +
+  geom_line(alpha=0.75)
 ~~~
