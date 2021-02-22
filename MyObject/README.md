@@ -912,3 +912,11 @@ daily %>%
   ggplot(aes(date, resid, color=model)) +
   geom_line(alpha=0.75)
 ~~~
+
+### ２０章　purrrとbroomによる多数のモデル  
+
+データ及びモデルをカテゴリ別にリスト列に要約する  
+リスト列を展開し整理データを作成する  
+
+
+
