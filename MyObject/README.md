@@ -915,8 +915,75 @@ daily %>%
 
 ### ２０章　purrrとbroomによる多数のモデル  
 
-データ及びモデルをカテゴリ別にリスト列に要約する  
-リスト列を展開し整理データを作成する  
+多数のモデルを統一的に処理する
+1. データ及びモデルをカテゴリ別にリスト列に要約する  
+1. リスト列を展開し整理データを作成する  
 
+* 活用事例  
+~~~
+#入れ子データ
+#country×continent毎に全てのデータをまとめたリスト列を作成する
+by_country <- gapminder %>%
+  group_by(country, continent) %>%
+  nest()
 
+#モデルを定義
+country_model <- function(df) {
+  lm(lifeExp~year, data=df)
+}
 
+#グループ毎にモデルを適用し、結果をリスト列とする
+by_country <- by_country %>%
+  mutate(model=map(data, country_model),
+          resids=map2(data, model, add_residuals))
+
+#リスト列を展開し、整理データを作成
+resids <- unnest(by_country, resids)
+
+#視覚化１
+resids %>%
+  ggplot(aes(year, resid, group=country)) +
+  geom_line(alpha=1/3) +
+  facet_wrap(~continent)
+
+#モデルの各種統計量をリスト列として出力し、展開
+glance <- by_country %>%
+  mutate(glance=map(model, broom::glance)) %>%
+  unnest(glance, .drop=T)
+
+#視覚化２
+glance %>%
+  ggplot(aes(continent, r.squared)) +
+  geom_jitter(width=0.5)
+~~~
+
+* リスト列の作成  
+~~~
+#tibble
+tibble(
+  x=list(1:3, 3:5),
+  y=c("1, 2", "3, 4, 5")
+)
+
+#tribble
+tribble(
+  ~x, ~y,
+  1:3, "1, 2",
+  3:5, "3, 4, 5"
+)
+
+#リストを出力する関数を適用
+df <- tribble(
+  ~x1,
+  "a,b,c",
+  "d,e,f,g"
+)
+
+df %>%
+  mutate(x2=stringr::str_split(x1, ","))
+
+#summarizeを用いる場合は、listを用いて一意にして出力
+mtcars %>%
+  group_by(cyl) %>%
+  summarize(q=list(quantile(mpg)))
+~~~
