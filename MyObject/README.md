@@ -986,4 +986,55 @@ df %>%
 mtcars %>%
   group_by(cyl) %>%
   summarize(q=list(quantile(mpg)))
+
+#リストから要素名のキャラクター列、値のリスト列
+x <- list(
+  a=1:5,
+  b=3:4,
+  c=5:6
+)
+
+df <- enframe(x)
 ~~~
+
+* リスト列の展開（単純化）  
+
+~~~
+#一意の値を出力する関数を適用  
+df <- tribble(
+  ~x,
+  list(a=1, b=2),
+  list(a=2, c=4)
+)
+
+df %>%
+  mutate(
+    a=map_dbl(x, "a"),
+    b=map_dbl(x, "b", .null=NA_real_)
+) #要素名で一意の値を抽出する
+  
+#unnestを用いた展開
+df2 <- tribble(
+  ~x, ~y, ~z,
+  1, "a", 1:2,
+  2, c("b", "c"), 3
+)
+
+df2 %>% unnest(c(y, z))
+~~~
+
+* broom  
+glance、tidy、augment等、複数のモデルをまとめて扱うのに便利な機能があるため、チェックすること  
+
+
+## 第Ⅴ部　コミュニケーション  
+
+マークダウンを使用したコミュニケーションについて  
+
+### ２１章　Rマークダウン  
+
+
+
+
+
+
