@@ -1035,7 +1035,18 @@ glance、tidy、augment等、複数のモデルをまとめて扱うのに便利
 
 デフォルトはHTML文書、HTMLスライドも追加のパッケージなしで出力できる  
 PDFで出力する場合はTEX等の追加的インストールが必要となる  
+knitrがrmdファイルからmdファイルを作成し、それをpandocが各指定の書式の文書に変換する  
 
+[レファレンス](https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+[チートシート（日本語）](https://rstudio.com/wp-content/uploads/2016/11/Rmarkdown-cheatsheet-2.0_ja.pdf)
+
+1. テキストフォーマット  
+2. コードチャンク  
+  表はknitr::kableでフォーマットを指定することができる
+  knitr::clean_cache()で全てのキャッシュをクリアできる  
+3. YAMLヘッダ  
+
+### ２２章　ggplot2でコミュニケーションのためのグラフ作成  
 
 
 
