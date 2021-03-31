@@ -1046,7 +1046,95 @@ knitrがrmdファイルからmdファイルを作成し、それをpandocが各�
   knitr::clean_cache()で全てのキャッシュをクリアできる  
 3. YAMLヘッダ  
 
+
 ### ２２章　ggplot2でコミュニケーションのためのグラフ作成  
+
+効果的な図表の作成  
+
+1. ラベル 
+~~~
+# タイトル、サブタイトル、軸名、キャプション、凡例名
+# 数式の使用
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color=class)) +
+  geom_smooth(se=F) +
+  labs(
+    title=paste(
+      "Fuel efficiency generally decreases with",
+      "engine size"
+    ),
+    subtitle=paste(
+      "Two seaters (sports cars) are an exception",
+      "because of their light weight"
+    ),
+    caption="Data from fueleconomy.gov",
+    # x="Engine displacement (L)",
+    # y="Highwqay fuel economy (mpg)",
+    x=quote(sum(x[i]^2, i==1, n)),
+    y=quote(alpha + beta + frac(delta, theta))
+    color="Car Type"
+  )
+~~~
+2. アノテーション（ラベル）
+~~~
+# ラベル情報（ラベルとして表示するデータ）を用意
+best_in_class <- mpg %>%
+  group_by(class) %>%
+  filter(row_number(desc(hwy))==1)
+
+# geom_text、最もシンプル
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color=class)) +
+  geom_text(aes(label=model), data=best_in_class)
+
+# geom_label、ラベルに囲いが付く
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color=class)) +
+  geom_label(
+    aes(label=model), 
+    data=best_in_class,
+    nudge_y=2,
+    alpha=0.5)
+
+# ggrepel::geom_label_repel、ラベルの重複を避ける
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color=class)) +
+  geom_point(size=3, shape=1, data=best_in_class) +
+  ggrepel::geom_label_repel(
+    aes(label=model), 
+    data=best_in_class)
+
+# アノテーション
+# アノテーションデータ
+label <- mpg %>%
+  summarize(
+    displ=max(displ),
+    hwy=max(hwy),
+    label=paste(
+      "Increasing engine size is \nrelated to",
+      "decreasing fuel economy"
+    )
+  )
+
+# 表示
+# vjust、hjustは指定した座標をテキストのどの位置に合わせるかを指定する
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  geom_text(
+    aes(label=label),
+    data=label,
+    vjust="top",
+    hjust="right"
+  ) +
+  geom_hline(yintercept=20, color="white", size=2) # 補助線
+~~~
+
+
+
+4. 
+5. 
+
+
 
 
 
