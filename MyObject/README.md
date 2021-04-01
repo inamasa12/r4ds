@@ -1129,10 +1129,101 @@ ggplot(mpg, aes(displ, hwy)) +
   geom_hline(yintercept=20, color="white", size=2) # 補助線
 ~~~
 
+3. スケール  
+~~~
+# デフォルト設定
+# 各軸及びグループの型を設定
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour=class)) +
+  scale_x_continuous() +
+  scale_y_continuous() +
+  scale_color_discrete()
+
+# 日付型、目盛り、ラベルの表示形式を設定
+presidential %>%
+  mutate(id=33+row_number()) %>%
+  ggplot(aes(start, id)) +
+  geom_point() +
+  #線分
+  geom_segment(aes(xend=end, yend=id)) +
+  #目盛りを変数で指定
+  scale_x_dat(
+    NULL,
+    breaks=presidential$start,
+    date_labels="'%y"
+
+# スケールの変換（対数のケース） 
+ggplot(diamonds, aes(carat, price)) +
+  geom_bin2d() +
+  scale_x_log10() +
+  scale_y_log10()
+
+# 色によるスケールの設定
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color=drv, shape=drv)) +
+  scale_color_brewer(palette="Set1")
+    
+# 個別に色を指定する場合
+presidential %>%
+  mutate(id=33+row_number()) %>%
+  ggplot(aes(start, id, color=party)) +
+  geom_point() +
+  #目盛りを変数で指定
+  scale_colour_manual(
+    values=c(Republican="red", Democratic="blue")
+
+# 色によるスケールの設定（連続変数）
+ggplot(df, aes(x, y)) +
+  geom_hex() +
+  viridis::scale_fill_viridis() +
+  coord_fixed()
+~~~
+
+4. 凡例  
+プロット以外の部分はthemeで設定する  
+~~~
+# 凡例の位置を設定
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color=class)) +
+  geom_smooth(se=F) +
+  theme(legend.position="bottom") +
+  #凡例の要素の制御
+  guides(
+    color=guide_legend(
+      nrow=1,
+      override.aes=list(size=4)
+    )
+  )
+~~~
+
+5. ズーミング  
+~~~
+# 特定の範囲にフォーカス
+ggplot(mpg, mapping=aes(displ, hwy)) +
+  geom_point(aes(color=class)) +
+  geom_smooth() +
+  coord_cartesian(xlim=c(5, 7), ylim=c(10, 30))
+
+# 軸の設定で操作することも可能
+p1 <- ggplot(suv, aes(displ, hwy, color=drv)) +
+  geom_point() +
+  scale_x_continuous(limits=range(mpg$displ)) +
+  scale_y_continuous(limits=range(mpg$hwy)) +
+  scale_color_discrete(limits=unique(mpg$drv))
 
 
-4. 
-5. 
+~~~
+
+
+ 
+
+
+
+* Tips  
+geom_rect: データの周りに四角形を表示  
+geom_segment: データを起点に線分を表示    
+
+
 
 
 
