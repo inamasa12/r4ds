@@ -1210,11 +1210,18 @@ p1 <- ggplot(suv, aes(displ, hwy, color=drv)) +
   scale_x_continuous(limits=range(mpg$displ)) +
   scale_y_continuous(limits=range(mpg$hwy)) +
   scale_color_discrete(limits=unique(mpg$drv))
-
-
 ~~~
 
-
+6. テーマ  
+~~~
+# 好みのテーマを設定
+# デフォルトはgray、他にbw、dark、light、light_draw、minimal、void、classic
+# 拡張パッケージggthemes
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color=class)) +
+  geom_smooth(se=F) +
+  theme_bw()
+~~~
  
 
 
@@ -1222,6 +1229,7 @@ p1 <- ggplot(suv, aes(displ, hwy, color=drv)) +
 * Tips  
 geom_rect: データの周りに四角形を表示  
 geom_segment: データを起点に線分を表示    
+ggsave("****.pdf"): プロットの保存  
 
 
 
