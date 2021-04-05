@@ -1223,13 +1223,64 @@ ggplot(mpg, aes(displ, hwy)) +
   theme_bw()
 ~~~
  
-
-
-
 * Tips  
 geom_rect: データの周りに四角形を表示  
 geom_segment: データを起点に線分を表示    
 ggsave("****.pdf"): プロットの保存  
+
+
+### ２３章　Rマークダウンフォーマット  
+
+各種フォーマットの出力が可能  
+
+1. ノートブック
+html_notebookで出力  
+開発者の協働用（ソースコードが埋め込まれている、.Rmdファイルが再生できる）  
+
+1. プレゼンテーション  
+ioslides_presentation、slidy_presentation、beamer_presentation  
+その他、reveal_jsやrmdshower  
+
+1. ダッシュボード
+グラフの集合  
+~~~
+---
+title: "Diamonds distribution dashboard"
+output: flexdashboard::flex_dashboard
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(dplyr)
+knitr::opts_chunk$set(fig.width = 5, fig.asp=1/3)
+```
+
+## Column 1
+### Carat
+``` {r}
+ggplot(diamonds, aes(carat)) + geom_histogram(binwidth=0.1)
+```
+### Cut
+``` {r}
+ggplot(diamonds, aes(cut)) + geom_bar()
+```
+### Color
+``` {r}
+ggplot(diamonds, aes(color)) + geom_bar()
+```
+## Column 2
+### The largest diamonds
+``` {r}
+diamonds %>%
+  arrange(desc(carat)) %>%
+  head(100) %>%
+  select(carat, cut, color, price) %>%
+  DT::datatable()
+```
+~~~
+
+1. インタラクティブなオブジェクトの埋め込み  
+htmlwidgets、shiny  
 
 
 
