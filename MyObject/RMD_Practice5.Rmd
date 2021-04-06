@@ -1,0 +1,38 @@
+---
+title: "Cache Practice"
+author: "Masahiro Inaba"
+date: "2021年3月6日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Cache
+
+lubridate::now()等、毎回出力が変わるような処理が含まれる場合はchched=TRUEのチャンクでも毎回評価される
+
+```{r c1, cache=TRUE}
+lubridate::now()
+a=2
+print(a)
+```
+
+
+```{r c2, cache=TRUE, dependson="c1"}
+lubridate::now()
+b=a+2
+c=a-1-7
+print(b)
+print(c)
+```
+
+```{r c3, cache=TRUE, dependson="c2"}
+lubridate::now()
+d=b+c
+print(d)
+```
+
+
+

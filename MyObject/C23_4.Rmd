@@ -1,0 +1,23 @@
+---
+title: "Shiny Web App"
+author: "Masahiro Inaba"
+date: "2021年4月4日"
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    code_folding: hide
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+textInput("name", "What i your name?")
+numericInput("age", "How old are you?", NA, min=0, max=150)
+
+```

@@ -1,0 +1,24 @@
+---
+title: "Interactive"
+author: "Masahiro Inaba"
+date: "2021年4月4日"
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(leaflet)
+leaflet() %>%
+  setView(174.764, -36.877, zoom=16) %>%
+  addTiles() %>%
+  addMarkers(174.764, -36.877, popup="Manungawhau")
+```

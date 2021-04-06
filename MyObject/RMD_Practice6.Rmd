@@ -1,0 +1,27 @@
+---
+title: "Cache Practice"
+author: "Masahiro Inaba"
+date: "2021年3月6日"
+output: 
+  html_document:
+    toc: True
+---
+
+## データの生成
+
+```{R Test}
+test <- summary(mtcars)
+```
+
+## 出力１
+
+```{R Print1}
+print(test)
+```
+
+## 出力２
+
+```{R Print2}
+knitr::kable(test, caption="Table with kable")
+```
+

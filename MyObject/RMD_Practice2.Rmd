@@ -1,0 +1,58 @@
+---
+title: "Diamond sizes"
+date: 2016-08-25
+output: html_document
+---
+
+```{r setup, include = FALSE}
+library(ggplot2)
+library(dplyr)
+
+smaller <- diamonds %>% filter(carat <= 2.5)
+
+comma <- function(x) format(x, digits=2, big.mark=",")
+```
+
+We have data about `r comma(nrow(diamonds))` diamonds. Only 
+`r nrow(diamonds) - nrow(smaller)` are larger than
+2.5 carats. The distribution of the remainder is shown
+below:
+
+```{r}
+smaller %>% 
+  ggplot(aes(carat)) + 
+  geom_freqpoly(binwidth = 0.01)
+```
+
+
+* 大きさと他の変数との関係
+
+  色や透明度は大きさ（カラット）と関係している
+
+  カットとの関係はなさそう
+
+```{r, echo=FALSE}
+smaller %>%
+  ggplot(aes(color, carat)) +
+  geom_boxplot() +
+  facet_grid(clarity~cut)
+```
+
+* 大きいダイヤの特性
+  透明度が高い
+
+```{r, echo=FALSE}
+smaller %>%
+  ggplot(aes(clarity, carat)) +
+  geom_violin() +
+  geom_point(
+    data=top_n(smaller, 20, carat),
+    size=2,
+    color="red"
+  )
+```
+
+
+
+
+
